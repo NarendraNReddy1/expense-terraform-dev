@@ -17,7 +17,13 @@ resource "aws_ssm_parameter" "public_subnet_ids" {
 #["id1","id2"] -- TERRAFORM
 #id1,id2       ---> SSM parameter
 
+resource "aws_ssm_parameter" "private_subnet_ids" {
+  name  = "/${var.project_name}/${var.environment}/private_subnet_ids"
+  type  = "StringList"
+  value = join(",",module.vpc.private_subnet_ids) # CONVERTING LIST OT STRING LIST
 
+  overwrite = true
+}
 
 
 resource "aws_ssm_parameter" "db_subnet_group_name" {
